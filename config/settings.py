@@ -1,14 +1,28 @@
-import os
 from pathlib import Path
 from datetime import timedelta
 
+import dj_database_url
+from decouple import config
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "change-this-in-production"
+# ==================================================
+# SECURITY
+# ==================================================
 
-DEBUG = True
+SECRET_KEY = config("SECRET_KEY")
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = config("DEBUG", default=False, cast=bool)
+
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default="127.0.0.1,localhost",
+    cast=lambda v: [host.strip() for host in v.split(",")]
+)
+
+# ==================================================
+# APPLICATIONS
+# ==================================================
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -29,6 +43,10 @@ INSTALLED_APPS = [
     "payments",
 ]
 
+# ==================================================
+# MIDDLEWARE
+# ==================================================
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -41,6 +59,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "config.urls"
+
+# ==================================================
+# TEMPLATES
+# ==================================================
 
 TEMPLATES = [
     {
@@ -60,32 +82,64 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# ==================================================
+# DATABASE
+# ==================================================
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL"),
+        conn_max_age=600,
+    )
 }
+
+# ==================================================
+# AUTH
+# ==================================================
 
 AUTH_USER_MODEL = "accounts.User"
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"
+    },
 ]
 
+# ==================================================
+# INTERNATIONALIZATION
+# ==================================================
+
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "Africa/Nairobi"
+
+TIME_ZONE = config("TIME_ZONE", default="Africa/Nairobi")
+
 USE_I18N = True
 USE_TZ = True
 
+# ==================================================
+# STATIC & MEDIA
+# ==================================================
+
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# ==================================================
+# DJANGO REST FRAMEWORK
+# ==================================================
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -96,9 +150,33 @@ REST_FRAMEWORK = {
     ),
 }
 
+# ==================================================
+# JWT
+# ==================================================
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=6),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+# ==================================================
+# CORS
+# ==================================================
+
+CORS_ALLOW_ALL_ORIGINS = config(
+    "CORS_ALLOW_ALL_ORIGINS",
+    default=False,
+    cast=bool,
+)
+
+CORS_ALLOWED_ORIGINS = config(
+    "CORS_ALLOWED_ORIGINS",
+    default="",
+    cast=lambda v: [origin.strip() for origin in v.split(",") if origin.strip()],
+)
+
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="",
+    cast=lambda v: [origin.strip() for origin in v.split(",") if origin.strip()],
+)
