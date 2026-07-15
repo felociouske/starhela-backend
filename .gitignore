@@ -1,0 +1,173 @@
+# ==========================================
+# Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+venv/
+env/
+ENV/
+.venv/
+.virtualenv/
+
+# ==========================================
+# Environment Variables
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Django
+# ==========================================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Static & Media
+staticfiles/
+media/
+
+# Collected static files
+/static/
+/static_root/
+
+# ==========================================
+# Django Migrations
+# Keep migrations except __pycache__
+# ==========================================
+**/migrations/__pycache__/
+**/migrations/*.pyc
+
+# ==========================================
+# Testing
+# ==========================================
+.coverage
+.coverage.*
+.cache/
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+
+# ==========================================
+# Type Checkers / Linters
+# ==========================================
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# ==========================================
+# Jupyter
+# ==========================================
+.ipynb_checkpoints/
+
+# ==========================================
+# IDEs
+# ==========================================
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# OS Files
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# Node.js (if using React/Vite)
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite
+.vite/
+dist/
+
+# ==========================================
+# Package Managers
+# ==========================================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Uncomment if you intentionally don't track lock files.
+# If you're building an application (not a library), it's
+# generally recommended to KEEP your lock file in Git.
+
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+
+# ==========================================
+# Temporary Files
+# ==========================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# ==========================================
+# Coverage
+# ==========================================
+coverage.xml
+nosetests.xml
+
+# ==========================================
+# Celery
+# ==========================================
+celerybeat-schedule
+
+# ==========================================
+# Redis
+# ==========================================
+dump.rdb
+
+# ==========================================
+# Gunicorn
+# ==========================================
+gunicorn.pid
+
+# ==========================================
+# Docker
+# ==========================================
+*.pid
+*.seed
+
+# ==========================================
+# Secret Keys / Certificates
+# ==========================================
+*.pem
+*.key
+*.crt
